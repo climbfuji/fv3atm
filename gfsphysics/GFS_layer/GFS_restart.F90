@@ -123,7 +123,7 @@ module GFS_restart
 #ifdef CCPP
     ! GF
     if (Model%imfdeepcnv == 3) then
-      Restart%num3d = Restart%num3d + 2
+      Restart%num3d = Restart%num3d + 3
     endif
     ! MYNN PBL 
     if (Model%do_mynnedmf) then
@@ -277,6 +277,11 @@ module GFS_restart
       Restart%name3d(num) = 'gf_3d_prevsq'
       do nb = 1,nblks
         Restart%data(nb,num)%var3p => Tbd(nb)%prevsq(:,:)
+      enddo
+      num = num + 1
+      Restart%name3d(num) = 'gf_3d_qci_conv'
+      do nb = 1,nblks
+        Restart%data(nb,num)%var3p => Coupling(nb)%qci_conv(:,:)
       enddo
     endif
     ! MYNN PBL
