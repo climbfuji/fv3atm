@@ -43,3 +43,9 @@
   units = DDT
   dimensions = (omp_threads)
   type = GFS_interstitial_type
+[Atm_block]
+  standard_name = Atm_block_instance
+  long_name = instance of derived data type Atm_block
+  units = DDT
+  dimensions = ()
+  type = block_control_type

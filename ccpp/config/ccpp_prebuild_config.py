@@ -13,6 +13,8 @@ HOST_MODEL_IDENTIFIER = "FV3"
 # relative to basedir = top-level directory of host model. This includes
 # kind and type definitions used in CCPP physics.
 VARIABLE_DEFINITION_FILES = [
+    'FMS/block_control/block_control.F90',
+    'FV3/atmos_model.F90',
     'FV3/ccpp/physics/physics/machine.F',
     'FV3/ccpp/physics/physics/radsw_param.f',
     'FV3/ccpp/physics/physics/radlw_param.f',
@@ -82,6 +84,12 @@ TYPEDEFS_NEW_METADATA = {
     'mo_source_functions' : {
         'ty_source_func_lw' : '',
         'mo_source_functions' : '',
+        },
+    'block_control_mod' : {
+        'block_control_mod' : '',
+        },
+    'atmos_model_mod' : {
+        'atmos_model_mod' : '',
         },
     }
 

@@ -82,12 +82,16 @@ if(CCPP)
     add_dependencies(gfsphysics ccpp ccppphys)
     add_dependencies(ccppdriver ccpp ccppphys)
     add_dependencies(ccppphys ccpp)
+    add_dependencies(ccppphys fms)
+    add_dependencies(gfsphysics fms)
 
     target_include_directories(fv3dycore PRIVATE ${CMAKE_BINARY_DIR}/FV3/ccpp/framework/src)
     target_include_directories(fv3dycore PRIVATE ${CMAKE_BINARY_DIR}/FV3/ccpp/driver)
 
     target_link_libraries(ccppphys PRIVATE sp::sp_d)
     target_link_libraries(ccppphys PRIVATE w3nco::w3nco_d)
+    target_link_libraries(ccppphys PRIVATE fms)
+    target_link_libraries(gfsphysics PRIVATE fms)
 endif()
 
 ###############################################################################

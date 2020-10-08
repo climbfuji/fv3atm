@@ -9,6 +9,7 @@ module CCPP_data
     use GFS_typedefs,  only: GFS_control_type,       &
                              GFS_data_type,          &
                              GFS_interstitial_type
+    use block_control_mod, only: block_control_type
 
     implicit none
 
@@ -21,7 +22,13 @@ module CCPP_data
            CCPP_interstitial,      &
            GFS_control,            &
            GFS_data,               &
-           GFS_interstitial
+           GFS_interstitial,       &
+           Atm_block
+
+    !-----------------
+    !  Block container
+    !-----------------
+    type (block_control_type), target   :: Atm_block
 
     !-------------------------------------------------------!
     !  GFS data containers, GFS_Data has dimension nblocks  !

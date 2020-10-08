@@ -18,6 +18,11 @@
 !* or see:   http://www.gnu.org/licenses/gpl.html                      *
 !***********************************************************************
 module atmos_model_mod
+
+!! \section arg_table_atmos_model_mod
+!! \htmlinclude atmos_model_mod.html
+!!
+
 !-----------------------------------------------------------------------
 !<OVERVIEW>
 !  Driver for the atmospheric model, contains routines to advance the
@@ -96,7 +101,9 @@ use IPD_typedefs,       only: IPD_init_type, IPD_control_type, &
 use CCPP_data,          only: ccpp_suite,                      &
                               IPD_control => GFS_control,      &
                               IPD_data => GFS_data,            &
-                              IPD_interstitial => GFS_interstitial
+                              IPD_interstitial => GFS_interstitial, &
+                              Atm_block
+
 use IPD_driver,         only: IPD_initialize, IPD_initialize_rst
 use CCPP_driver,        only: CCPP_step, non_uniform_blocks
 #else
@@ -204,10 +211,10 @@ type(IPD_restart_type)              :: IPD_Restart
 !--------------
 type(iau_external_data_type)        :: IAU_Data ! number of blocks
 
-!-----------------
-!  Block container
-!-----------------
-type (block_control_type), target   :: Atm_block
+!!-----------------
+!!  Block container
+!!-----------------
+!type (block_control_type), target   :: Atm_block
 
 !-----------------------------------------------------------------------
 
