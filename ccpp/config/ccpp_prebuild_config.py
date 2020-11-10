@@ -168,7 +168,6 @@ SCHEME_FILES = [
     'FV3/ccpp/physics/physics/sfc_diag.f',
     'FV3/ccpp/physics/physics/sfc_diag_post.F90',
     'FV3/ccpp/physics/physics/sfc_drv_ruc.F90',
-    'FV3/ccpp/physics/physics/lsm_ruc_sfc_sice_interstitial.F90',
     'FV3/ccpp/physics/physics/sfc_cice.f',
     'FV3/ccpp/physics/physics/sfc_diff.f',
     'FV3/ccpp/physics/physics/sfc_drv.f',
