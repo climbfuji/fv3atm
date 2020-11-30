@@ -807,7 +807,6 @@ module GFS_typedefs
     integer              :: isot            !< isot = 0   => Zobler soil type  ( 9 category)
                                             !< isot = 1   => STATSGO soil type (19 category, AKA 'STAS'(?))
                                             !< isot = 2   => STAS-RUC soil type (19 category, NOAH WRFv4 only)
-    integer              :: kice=2          !< number of layers in sice
 #ifdef CCPP
     integer              :: lsoil_lsm       !< number of soil layers internal to land surface model
     integer              :: lsnow_lsm       !< maximum number of snow layers internal to land surface model
