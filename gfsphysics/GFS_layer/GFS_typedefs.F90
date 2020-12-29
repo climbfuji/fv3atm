@@ -811,7 +811,7 @@ module GFS_typedefs
     integer              :: lsoil_lsm       !< number of soil layers internal to land surface model
     integer              :: lsnow_lsm       !< maximum number of snow layers internal to land surface model
     integer              :: lsnow_lsm_lbound!< lower bound for snow arrays, depending on lsnow_lsm
-    real(kind=kind_phys), pointer :: zs(:) => null() !< depth of soil levels for land surface model
+    real(kind=kind_phys), pointer :: zs(:)    => null() !< depth of soil levels for land surface model
     real(kind=kind_phys), pointer :: pores(:) => null() !< max soil moisture for a given soil type for land surface model
     real(kind=kind_phys), pointer :: resid(:) => null() !< min soil moisture for a given soil type for land surface model
     logical              :: rdlai           !< read LAI from input file (for RUC LSM or NOAH LSM WRFv4)
@@ -3983,7 +3983,7 @@ module GFS_typedefs
     end if
     ! Set number of ice model layers
     Model%kice      = kice
-   
+
     ! Allocate variable for min/max soil moisture for a given soil type
     allocate (Model%pores(30))
     allocate (Model%resid(30))
@@ -5167,6 +5167,8 @@ module GFS_typedefs
       print *, ' aoasis            : ', Model%aoasis
       print *, ' fasdas            : ', Model%fasdas
       print *, ' kice              : ', Model%kice
+      print *, ' shape(pores)      : ', shape(Model%pores)
+      print *, ' shape(resid)      : ', shape(Model%resid)
 #endif
       print *, ' ivegsrc           : ', Model%ivegsrc
       print *, ' isot              : ', Model%isot
