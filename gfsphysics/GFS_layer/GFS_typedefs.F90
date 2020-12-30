@@ -1112,6 +1112,8 @@ module GFS_typedefs
     integer              :: skeb_npass
     integer              :: lndp_type
     integer              :: n_var_lndp
+    logical              :: lndp_each_step    ! flag to indicate that land perturbations are applied at every time step,
+                                              ! otherwise they are applied only after gcycle is run
     character(len=3)     :: lndp_var_list(6)  ! dimension here must match  n_var_max_lndp in  stochy_nml_def
     real(kind=kind_phys) :: lndp_prt_list(6)  ! dimension here must match  n_var_max_lndp in  stochy_nml_def 
                                               ! also previous code had dimension 5 for each pert, to allow 
@@ -3471,8 +3473,9 @@ module GFS_typedefs
     logical :: do_shum      = .false.
     logical :: do_skeb      = .false.
     integer :: skeb_npass   = 11
-    integer :: lndp_type    = 0 
-    integer :: n_var_lndp   =  0 
+    integer :: lndp_type      = 0
+    integer :: n_var_lndp     = 0
+    logical :: lndp_each_step = .false.
 
 !--- aerosol scavenging factors
     character(len=20) :: fscav_aero(20) = 'default'
@@ -3557,7 +3560,8 @@ module GFS_typedefs
                                do_deep, jcap,                                               &
                                cs_parm, flgmin, cgwf, ccwf, cdmbgwd, sup, ctei_rm, crtrh,   &
                                dlqf, rbcr, shoc_parm, psauras, prauras, wminras,            &
-                               do_sppt, do_shum, do_skeb, lndp_type,  n_var_lndp,           & 
+                               do_sppt, do_shum, do_skeb,                                   &
+                               lndp_type,  n_var_lndp, lndp_each_step,                      &
                           !--- Rayleigh friction
                                prslrd0, ral_ts,  ldiag_ugwp, do_ugwp, do_tofd,              &
                           ! --- Ferrier-Aligo
@@ -4224,6 +4228,7 @@ module GFS_typedefs
     Model%do_skeb          = do_skeb
     Model%lndp_type        = lndp_type
     Model%n_var_lndp       = n_var_lndp
+    Model%lndp_each_step   = lndp_each_step
 
     !--- cellular automata options
     Model%nca              = nca
@@ -5326,7 +5331,8 @@ module GFS_typedefs
       print *, ' do_shum           : ', Model%do_shum
       print *, ' do_skeb           : ', Model%do_skeb
       print *, ' lndp_type         : ', Model%lndp_type
-      print *, ' n_var_lndp         : ', Model%n_var_lndp
+      print *, ' n_var_lndp        : ', Model%n_var_lndp
+      print *, ' lndp_each_step    : ', Model%lndp_each_step
       print *, ' '
       print *, 'cellular automata'
       print *, ' nca               : ', Model%nca

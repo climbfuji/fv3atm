@@ -13,6 +13,7 @@ module stochastic_physics_wrapper_mod
   real(kind=kind_phys), dimension(:,:,:), allocatable, save :: skebv_wts
   real(kind=kind_phys), dimension(:,:,:), allocatable, save :: sfc_wts
 
+  integer, save :: lsoil = -999
   real(kind=kind_phys), dimension(:,:,:), allocatable, save :: smc
   real(kind=kind_phys), dimension(:,:,:), allocatable, save :: stc
   real(kind=kind_phys), dimension(:,:,:), allocatable, save :: slc
@@ -119,15 +120,14 @@ module stochastic_physics_wrapper_mod
          allocate(sfc_wts(1:Atm_block%nblks,maxval(GFS_Control%blksz),1:GFS_Control%n_var_lndp))
       end if
       if (GFS_Control%lndp_type .EQ. 2) then ! save wts, and apply lndp scheme
-        if (GFS_Control%lsm == 1) then
-          allocate(smc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil))
-          allocate(slc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil))
-          allocate(stc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil))
-        elseif (GFS_Control%lsm == GFS_Control%lsm_ruc) then
-          allocate(smc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil_lsm))
-          allocate(slc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil_lsm))
-          allocate(stc(1:Atm_block%nblks,maxval(GFS_Control%blksz),GFS_Control%lsoil_lsm))
-        endif
+          if (GFS_Control%lsm == GFS_Control%lsm_noah) then
+            lsoil = GFS_Control%lsoil
+          elseif (GFS_Control%lsm == GFS_Control%lsm_ruc) then
+            lsoil = GFS_Control%lsoil_lsm
+          endif
+          allocate(smc(1:Atm_block%nblks,maxval(GFS_Control%blksz),lsoil))
+          allocate(slc(1:Atm_block%nblks,maxval(GFS_Control%blksz),lsoil))
+          allocate(stc(1:Atm_block%nblks,maxval(GFS_Control%blksz),lsoil))
           allocate(stype(1:Atm_block%nblks,maxval(GFS_Control%blksz)))
           allocate(vfrac(1:Atm_block%nblks,maxval(GFS_Control%blksz)))
           allocate(snoalb(1:Atm_block%nblks,maxval(GFS_Control%blksz)))
@@ -221,19 +221,19 @@ module stochastic_physics_wrapper_mod
                end do
              endif
 
-             ! determine whether land paramaters have been over-written
-             if (mod(GFS_Control%kdt,GFS_Control%nscyc) == 1)  then ! logic copied from GFS_driver
-                    param_update_flag = .true.
+             ! determine whether land paramaters have been over-written to
+             ! trigger applying perturbations (logic copied from GFS_driver),
+             ! or if perturbations should be applied at every time step
+             if (mod(GFS_Control%kdt,GFS_Control%nscyc) == 1 .or. GFS_Control%lndp_each_step) then
+               param_update_flag = .true.
              else
-                    param_update_flag = .false.
+               param_update_flag = .false.
              endif
 
-             call lndp_apply_perts( GFS_Control%blksz, GFS_Control%lsm, GFS_Control%lsoil, GFS_Control%lsm_ruc, &
-                               GFS_Control%lsoil_lsm, GFS_Control%zs, GFS_Control%dtf,                          &
-                               GFS_Control%n_var_lndp, GFS_Control%lndp_var_list, GFS_Control%lndp_prt_list,    &
-                               sfc_wts, xlon, xlat, stype, GFS_Control%pores, GFS_Control%resid,                &
-                               param_update_flag, smc, slc, stc,                                                &
-                               vfrac, alvsf, alnsf, alvwf, alnwf, facsf, facwf, snoalb, semis, ierr)
+             call lndp_apply_perts(GFS_Control%blksz, GFS_Control%lsm, GFS_Control%lsm_noah, GFS_Control%lsm_ruc, lsoil,      &
+                               GFS_Control%dtf, GFS_Control%n_var_lndp, GFS_Control%lndp_var_list, GFS_Control%lndp_prt_list, &
+                               sfc_wts, xlon, xlat, stype, GFS_Control%pores, GFS_Control%resid,param_update_flag,            &
+                               smc, slc, stc, vfrac, alvsf, alnsf, alvwf, alnwf, facsf, facwf, snoalb, semis, ierr)
              if (ierr/=0)  then
                     write(6,*) 'call to GFS_apply_lndp failed'
                     return
@@ -382,6 +382,7 @@ module stochastic_physics_wrapper_mod
          if (allocated(skebv_wts)) deallocate(skebv_wts)
       end if
       if ( GFS_Control%lndp_type .EQ. 2 ) then ! this scheme updates through forecast
+         lsoil = -999
          if (allocated(sfc_wts)) deallocate(sfc_wts)
       end if
       if (GFS_Control%lndp_type .EQ. 2) then ! save wts, and apply lndp scheme
