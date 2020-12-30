@@ -196,7 +196,7 @@ module stochastic_physics_wrapper_mod
 
              do nb=1,Atm_block%nblks
                 stype(nb,1:GFS_Control%blksz(nb))  = GFS_Data(nb)%Sfcprop%stype(:)
-                vfrac(nb,1:GFS_Control%blksz(nb))  = GFS_Data(nb)%Sfcprop%vfrac(:) 
+                vfrac(nb,1:GFS_Control%blksz(nb))  = GFS_Data(nb)%Sfcprop%vfrac(:)
                 snoalb(nb,1:GFS_Control%blksz(nb)) = GFS_Data(nb)%Sfcprop%snoalb(:)
                 alvsf(nb,1:GFS_Control%blksz(nb))  = GFS_Data(nb)%Sfcprop%alvsf(:)
                 alnsf(nb,1:GFS_Control%blksz(nb))  = GFS_Data(nb)%Sfcprop%alnsf(:)
@@ -226,16 +226,15 @@ module stochastic_physics_wrapper_mod
                     param_update_flag = .true.
              else
                     param_update_flag = .false.
-             endif 
+             endif
 
              call lndp_apply_perts( GFS_Control%blksz, GFS_Control%lsm, GFS_Control%lsoil, GFS_Control%lsm_ruc, &
-                               GFS_Control%lsoil_lsm, GFS_Control%zs, GFS_Control%dtf,                          & 
-                               GFS_Control%n_var_lndp, GFS_Control%lndp_var_list, GFS_Control%lndp_prt_list,    & 
+                               GFS_Control%lsoil_lsm, GFS_Control%zs, GFS_Control%dtf,                          &
+                               GFS_Control%n_var_lndp, GFS_Control%lndp_var_list, GFS_Control%lndp_prt_list,    &
                                sfc_wts, xlon, xlat, stype, GFS_Control%pores, GFS_Control%resid,                &
                                param_update_flag, smc, slc, stc,                                                &
-                               vfrac, alvsf, alnsf, alvwf, alnwf, facsf, facwf, snoalb, ierr) 
-                               !vfrac, alvsf, alnsf, alvwf, alnwf, facsf, facwf, snoalb, semis, ierr) 
-             if (ierr/=0)  then 
+                               vfrac, alvsf, alnsf, alvwf, alnwf, facsf, facwf, snoalb, semis, ierr)
+             if (ierr/=0)  then
                     write(6,*) 'call to GFS_apply_lndp failed'
                     return
              endif
