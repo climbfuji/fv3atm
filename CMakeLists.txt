@@ -18,7 +18,7 @@ execute_process(COMMAND ${Python_EXECUTABLE}
                 RESULT_VARIABLE RC)
 # Check return code from ccpp_prebuild.py
 if(NOT RC EQUAL 0)
-  message(FATAL_ERROR "An error occured while running ccpp_prebuild.py, check ${CMAKE_CURRENT_BINARY_DIR}/ccpp_prebuild.{out,err}")
+  message(FATAL_ERROR "An error occured while running ccpp_prebuild.py, check ${CMAKE_CURRENT_BINARY_DIR}/ccpp_prebuild.err")
 endif()
 
 add_subdirectory(cpl)
