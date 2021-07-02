@@ -4025,6 +4025,7 @@ module GFS_diagnostics
 
 !  print *,'in gfdl_diag_register,af all extdiag, idx=',idx
 
+<<<<<<< HEAD
 ! -- chemistry diagnostic variables
   if (Model%cplchm) then
 
@@ -4189,6 +4190,8 @@ module GFS_diagnostics
 
   endif
 
+=======
+>>>>>>> ad7bddc3fbe0b25914fb28439337603ca5d0f3bf
 !--- prognostic variable tendencies (t, u, v, sph, clwmr, o3)
 !rab    idx = idx + 1
 !rab    ExtDiag(idx)%axes = 3
