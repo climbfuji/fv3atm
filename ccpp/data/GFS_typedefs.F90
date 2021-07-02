@@ -1169,7 +1169,6 @@ module GFS_typedefs
     integer              :: nto2            !< tracer index for oxygen
     integer              :: ntwa            !< tracer index for water friendly aerosol
     integer              :: ntia            !< tracer index for ice friendly aerosol
-    integer              :: ntchm           !< number of chemical tracers
     integer              :: ntchm           !< number of prognostic chemical tracers (advected)
     integer              :: ntchs           !< tracer index for first prognostic chemical tracer
     integer              :: ntche           !< tracer index for last prognostic chemical tracer
@@ -1792,6 +1791,11 @@ module GFS_typedefs
     real (kind=kind_phys), pointer :: tau_tofd(:)    => null()   !
 !---vay-2018 UGWP-diagnostics
 
+    real (kind=kind_phys), pointer :: wetdpc_deep(:,:) => null() !< instantaneous deep convective wet deposition    ( kg/m**2/s )
+    real (kind=kind_phys), pointer :: wetdpc_mid (:,:) => null() !< instantaneous mid convective wet deposition     ( kg/m**2/s )
+    real (kind=kind_phys), pointer :: wetdpc_shal(:,:) => null() !< instantaneous shallow convective wet deposition ( kg/m**2/s )
+
+    ! Surface pressure from previous timestep
     real (kind=kind_phys), pointer :: old_pgr(:) => null()     !< pgr at last timestep
 
     ! Auxiliary output arrays for debugging
@@ -3021,8 +3025,6 @@ module GFS_typedefs
 
       Coupling%rainc_cpl = clear_val
       Coupling%ushfsfci  = clear_val
-      Coupling%dkt       = clear_val
-      Coupling%dqdti     = clear_val
       Coupling%buffer_ebu   = clear_val
       Coupling%faersw_cpl   = clear_val
 
@@ -6364,6 +6366,15 @@ module GFS_typedefs
       allocate(Diag%ca_condition(IM))
       Diag%ca_condition = clear_val
       Diag%ca_plume = clear_val
+    endif
+
+    if (Model%ntchm>0) then
+      allocate(Diag%wetdpc_deep(IM,Model%ntchm))
+      Diag%wetdpc_deep = zero
+      allocate(Diag%wetdpc_mid (IM,Model%ntchm))
+      Diag%wetdpc_mid = zero
+      allocate(Diag%wetdpc_shal(IM,Model%ntchm))
+      Diag%wetdpc_shal = zero
     endif
 
     ! Auxiliary arrays in output for debugging
