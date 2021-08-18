@@ -30,7 +30,7 @@
   units = DDT
   dimensions = ()
   type = GFS_data_type
-[GFS_Interstitial(ccpp_thread_number)]
+[GFS_Interstitial(ccpp_block_number)]
   standard_name = GFS_interstitial_type_instance
   long_name = instance of derived type GFS_interstitial_type
   units = DDT
@@ -46,5 +46,5 @@
   standard_name = GFS_interstitial_type_instance_all_threads
   long_name = instance of derived type GFS_interstitial_type
   units = DDT
-  dimensions = (number_of_openmp_threads)
+  dimensions = (ccpp_block_count)
   type = GFS_interstitial_type
