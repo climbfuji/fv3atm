@@ -132,6 +132,7 @@ SCHEME_FILES = [
     'physics/physics/get_prs_fv3.F90',
     'physics/physics/gfdl_cloud_microphys.F90',
     'physics/physics/gfdl_fv_sat_adj.F90',
+    'physics/physics/gfdl_neg_adj.F90',
     'physics/physics/gfdl_sfc_layer.F90',
     'physics/physics/gscond.f',
     'physics/physics/gwdc.f',
