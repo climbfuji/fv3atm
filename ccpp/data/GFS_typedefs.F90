@@ -130,7 +130,8 @@ module GFS_typedefs
     real(kind=kind_phys) :: dt_dycore            !< dynamics time step in seconds
     real(kind=kind_phys) :: dt_phys              !< physics  time step in seconds
 !--- restart information
-    logical :: restart                           !< flag whether this is a coldstart (.false.) or a warmstart/restart (.true.)
+    logical :: restart                           !< flag whether this is a coldstart (.false.) or a restart (.true.)
+    logical :: surface_cycling                   !< flag whether surface data is cycled (always true for restarts)
 !--- hydrostatic/non-hydrostatic flag
     logical :: hydrostatic                       !< flag whether this is a hydrostatic or non-hydrostatic run
 !--- blocking data
@@ -1271,6 +1272,7 @@ module GFS_typedefs
     integer              :: kdt             !< current forecast iteration
     logical              :: first_time_step !< flag signaling first time step for time integration routine
     logical              :: restart         !< flag whether this is a coldstart (.false.) or a warmstart/restart (.true.)
+    logical              :: surface_cycling !< flag whether surface data is cycled (always true for restarts)
     logical              :: hydrostatic     !< flag whether this is a hydrostatic or non-hydrostatic run
     integer              :: jdat(1:8)       !< current forecast date and time
                                             !< (yr, mon, day, t-zone, hr, min, sec, mil-sec)
@@ -4793,6 +4795,13 @@ module GFS_typedefs
     Model%kdt              = nint(Model%fhour*con_hr/Model%dtp)
     Model%first_time_step  = .true.
     Model%restart          = restart
+    ! Surface cycling means that surface data files from previous runs
+    ! are combined with coldstart data for atmospheric fields. This is
+    ! required for RRFS applications. By default, set surface_cycling
+    ! to .false. Code in FV3GFS_io.F90 will update surface_cycling based
+    ! on whether certain variables read in contain valid data or not.
+    Model%surface_cycling  = .false.
+    !
     Model%hydrostatic      = hydrostatic
     Model%jdat(1:8)        = jdat(1:8)
     allocate(Model%si(Model%levr+1))
@@ -5876,6 +5885,7 @@ module GFS_typedefs
       print *, ' sec               : ', Model%sec
       print *, ' first_time_step   : ', Model%first_time_step
       print *, ' restart           : ', Model%restart
+      print *, ' surface_cycling   : ', Model%surface_cycling
       print *, ' hydrostatic       : ', Model%hydrostatic
     endif
 

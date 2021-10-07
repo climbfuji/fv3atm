@@ -1540,7 +1540,7 @@ module FV3GFS_io_mod
 
     endif
 
-      ! Fill in composite tsfc for coldstart runs - must happen after tsfcl is computed
+    ! Fill in composite tsfc for coldstart runs - must happen after tsfcl is computed
     compute_tsfc_for_colstart: if (sfc_var2(i,j,35) < -9990.0_r8) then
       if (Model%me == Model%master ) call mpp_error(NOTE, 'gfs_driver::surface_props_input - computing composite tsfc')
       if(Model%frac_grid) then ! 3-way composite
@@ -1569,7 +1569,17 @@ module FV3GFS_io_mod
           enddo
         enddo
       endif
+    else
+      ! If Sfcprop(nb)%tsfc has valid data and this is a coldstart run, then apparently a
+      ! previous surface data file has been combined with coldstart ICs for the atmosphere
+      if (.not. warm_start) then
+        if (Model%me == Model%master ) call mpp_error(NOTE, 'gfs_driver::surface_props_input - valid tsfc data for coldstart run, set surface_cycling to .true.')
+        Model%surface_cycling = .true.
+      endif
     endif compute_tsfc_for_colstart
+
+    !call sleep(30)
+    !call mpp_error(FATAL, 'gfs_driver::surface_props_input - STOP FOR DEBUGGING')
 
     if (sfc_var2(i,j,nvar_s2m) < -9990.0_r8) then
       if (Model%me == Model%master ) call mpp_error(NOTE, 'gfs_driver::surface_props_input - computing zorlwav')
