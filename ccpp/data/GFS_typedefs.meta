@@ -5102,6 +5102,12 @@
   units = flag
   dimensions = ()
   type = logical
+[surface_cycling]
+  standard_name = flag_for_surface_cycling
+  long_name = flag for surface cycling for coldstart
+  units = flag
+  dimensions = ()
+  type = logical
 [hydrostatic]
   standard_name = flag_for_hydrostatic_solver
   long_name = flag for hydrostatic solver from dynamics
