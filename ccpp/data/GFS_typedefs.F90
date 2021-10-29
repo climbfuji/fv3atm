@@ -1511,6 +1511,7 @@ module GFS_typedefs
     real (kind=kind_phys), pointer :: coszen(:)    => null()  !< mean cos of zenith angle over rad call period
     real (kind=kind_phys), pointer :: tsflw (:)    => null()  !< surface air temp during lw calculation in k
     real (kind=kind_phys), pointer :: semis (:)    => null()  !< surface lw emissivity in fraction
+    real (kind=kind_phys), pointer :: aerodp(:,:)  => null()  !< aerosol optical depth
 
 !--- In/Out (???) (radiaition only)
     real (kind=kind_phys), pointer :: coszdg(:)    => null()  !< daytime mean cosz over rad call period
@@ -1809,7 +1810,6 @@ module GFS_typedefs
     real (kind=kind_phys), pointer      :: adjvisbmu(:)       => null()  !<
     real (kind=kind_phys), pointer      :: adjvisdfu(:)       => null()  !<
     real (kind=kind_phys), pointer      :: adjvisdfd(:)       => null()  !<
-    real (kind=kind_phys), pointer      :: aerodp(:,:)        => null()  !<
     real (kind=kind_phys), pointer      :: alb1d(:)           => null()  !<
     real (kind=kind_phys), pointer      :: alpha(:,:)         => null()  !<
     real (kind=kind_phys), pointer      :: bexp1d(:)          => null()  !<
@@ -6184,6 +6184,7 @@ module GFS_typedefs
     allocate (Radtend%coszen (IM))
     allocate (Radtend%tsflw  (IM))
     allocate (Radtend%semis  (IM))
+    allocate (Radtend%aerodp (IM,NSPC1))
 
     Radtend%htrsw  = clear_val
     Radtend%htrlw  = clear_val
@@ -6191,6 +6192,7 @@ module GFS_typedefs
     Radtend%coszen = clear_val
     Radtend%tsflw  = clear_val
     Radtend%semis  = clear_val
+    Radtend%aerodp = clear_val
 
 !--- In/Out (???) (radiation only)
     allocate (Radtend%coszdg (IM))
@@ -6956,7 +6958,6 @@ module GFS_typedefs
     allocate (Interstitial%adjvisbmu       (IM))
     allocate (Interstitial%adjvisdfu       (IM))
     allocate (Interstitial%adjvisdfd       (IM))
-    allocate (Interstitial%aerodp          (IM,NSPC1))
     allocate (Interstitial%alb1d           (IM))
     if (.not. Model%do_RRTMGP) then
       ! RRTMGP uses its own cloud_overlap_param
@@ -7557,7 +7558,6 @@ module GFS_typedefs
     type(GFS_control_type), intent(in) :: Model
     integer :: iGas
     !
-    Interstitial%aerodp       = clear_val
     Interstitial%alb1d        = clear_val
     if (.not. Model%do_RRTMGP) then
       Interstitial%alpha      = clear_val
