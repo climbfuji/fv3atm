@@ -47,7 +47,8 @@ TYPEDEFS_NEW_METADATA = {
         'module_radlw_parameters' : '',
         },
     'CCPP_typedefs' : {
-        'CCPP_interstitial_type' : 'CCPP_interstitial',
+        'GFS_interstitial_type' : 'GFS_Interstitial(cdata%thrd_no)',
+        'GFDL_interstitial_type' : 'GFDL_interstitial',
         'CCPP_typedefs' : '',
         },
     'CCPP_data' : {
@@ -55,7 +56,6 @@ TYPEDEFS_NEW_METADATA = {
         },
     'GFS_typedefs' : {
         'GFS_control_type'      : 'GFS_Control',
-        'GFS_interstitial_type' : 'GFS_Interstitial(cdata%thrd_no)',
         'GFS_data_type'         : 'GFS_Data(cdata%blk_no)',
         'GFS_diag_type'         : 'GFS_Data(cdata%blk_no)%Intdiag',
         'GFS_tbd_type'          : 'GFS_Data(cdata%blk_no)%Tbd',
@@ -96,11 +96,16 @@ SCHEME_FILES = [
     # Relative path to source (from where ccpp_prebuild.py is called) : [ list of physics sets in which scheme may be called ];
     # current restrictions are that each scheme can only belong to one physics set, and all schemes within one group in the
     # suite definition file have to belong to the same physics set
-    'physics/physics/GFS_DCNV_generic.F90',
-    'physics/physics/GFS_GWD_generic.F90',
-    'physics/physics/GFS_MP_generic.F90',
-    'physics/physics/GFS_PBL_generic.F90',
-    'physics/physics/GFS_SCNV_generic.F90',
+    'physics/physics/GFS_DCNV_generic_pre.F90',
+    'physics/physics/GFS_DCNV_generic_post.F90',
+    'physics/physics/GFS_GWD_generic_pre.F90',
+    'physics/physics/GFS_GWD_generic_post.F90',
+    'physics/physics/GFS_MP_generic_pre.F90',
+    'physics/physics/GFS_MP_generic_post.F90',
+    'physics/physics/GFS_PBL_generic_pre.F90',
+    'physics/physics/GFS_PBL_generic_post.F90',
+    'physics/physics/GFS_SCNV_generic_pre.F90',
+    'physics/physics/GFS_SCNV_generic_post.F90',
     'physics/physics/GFS_debug.F90',
     'physics/physics/GFS_phys_time_vary.fv3.F90',
     'physics/physics/GFS_rad_time_vary.fv3.F90',
@@ -109,10 +114,22 @@ SCHEME_FILES = [
     'physics/physics/GFS_rrtmg_pre.F90',
     'physics/physics/GFS_rrtmg_setup.F90',
     'physics/physics/GFS_stochastics.F90',
-    'physics/physics/GFS_suite_interstitial.F90',
-    'physics/physics/GFS_surface_generic.F90',
-    'physics/physics/GFS_surface_composites.F90',
-    'physics/physics/GFS_surface_loop_control.F90',
+    'physics/physics/GFS_suite_interstitial_rad_reset.F90',
+    'physics/physics/GFS_suite_interstitial_phys_reset.F90',
+    'physics/physics/GFS_suite_interstitial_1.F90',
+    'physics/physics/GFS_suite_interstitial_2.F90',
+    'physics/physics/GFS_suite_stateout_reset.F90',
+    'physics/physics/GFS_suite_stateout_update.F90',
+    'physics/physics/GFS_suite_interstitial_3.F90',
+    'physics/physics/GFS_suite_interstitial_4.F90',
+    'physics/physics/GFS_suite_interstitial_5.F90',
+    'physics/physics/GFS_surface_generic_pre.F90',
+    'physics/physics/GFS_surface_generic_post.F90',
+    'physics/physics/GFS_surface_composites_pre.F90',
+    'physics/physics/GFS_surface_composites_inter.F90',
+    'physics/physics/GFS_surface_composites_post.F90',
+    'physics/physics/GFS_surface_loop_control_part1.F90',
+    'physics/physics/GFS_surface_loop_control_part2.F90',
     'physics/physics/GFS_time_vary_pre.fv3.F90',
     'physics/physics/cires_ugwp.F90',
     'physics/physics/cires_ugwp_post.F90',
@@ -121,20 +138,25 @@ SCHEME_FILES = [
     'physics/physics/ugwpv1_gsldrag.F90',
     'physics/physics/ugwpv1_gsldrag_post.F90',
     'physics/physics/cnvc90.f',
+    'physics/physics/cs_conv_pre.F90',
     'physics/physics/cs_conv.F90',
+    'physics/physics/cs_conv_post.F90',
     'physics/physics/cs_conv_aw_adj.F90',
     'physics/physics/cu_ntiedtke_pre.F90',
     'physics/physics/cu_ntiedtke.F90',
     'physics/physics/cu_ntiedtke_post.F90',
-    'physics/physics/dcyc2.f',
+    'physics/physics/dcyc2t3.f',
     'physics/physics/drag_suite.F90',
-    'physics/physics/gcm_shoc.F90',
+    'physics/physics/shoc.F90',
     'physics/physics/get_prs_fv3.F90',
+    'physics/physics/get_phi_fv3.F90',
     'physics/physics/gfdl_cloud_microphys.F90',
-    'physics/physics/gfdl_fv_sat_adj.F90',
+    'physics/physics/fv_sat_adj.F90',
     'physics/physics/gfdl_sfc_layer.F90',
-    'physics/physics/gscond.f',
+    'physics/physics/zhaocarr_gscond.f',
+    'physics/physics/gwdc_pre.f',
     'physics/physics/gwdc.f',
+    'physics/physics/gwdc_post.f',
     'physics/physics/gwdps.f',
     'physics/physics/h2ophys.f',
     'physics/physics/samfdeepcnv.f',
@@ -143,28 +165,30 @@ SCHEME_FILES = [
     'physics/physics/shalcnv.F',
     'physics/physics/maximum_hourly_diagnostics.F90',
     'physics/physics/m_micro.F90',
-    'physics/physics/m_micro_interstitial.F90',
+    'physics/physics/m_micro_pre.F90',
+    'physics/physics/m_micro_post.F90',
     'physics/physics/cu_gf_driver_pre.F90',
     'physics/physics/cu_gf_driver.F90',
     'physics/physics/cu_gf_driver_post.F90',
-    'physics/physics/moninedmf.f',
+    'physics/physics/hedmf.f',
     'physics/physics/moninshoc.f',
     'physics/physics/satmedmfvdif.F',
     'physics/physics/satmedmfvdifq.F',
     'physics/physics/shinhongvdif.F90',
     'physics/physics/ysuvdif.F90',
-    'physics/physics/module_MYNNPBL_wrapper.F90',
-    'physics/physics/module_MYNNSFC_wrapper.F90',
-    'physics/physics/module_SGSCloud_RadPre.F90',
-    'physics/physics/module_SGSCloud_RadPost.F90',
-    'physics/physics/module_MYJSFC_wrapper.F90',
-    'physics/physics/module_MYJPBL_wrapper.F90',
+    'physics/physics/mynnpbl_wrapper.F90',
+    'physics/physics/mynnsfc_wrapper.F90',
+    'physics/physics/sgscloud_radpre.F90',
+    'physics/physics/sgscloud_radpost.F90',
+    'physics/physics/myjsfc_wrapper.F90',
+    'physics/physics/myjpbl_wrapper.F90',
     'physics/physics/mp_thompson_pre.F90',
     'physics/physics/mp_thompson.F90',
     'physics/physics/mp_thompson_post.F90',
+    'physics/physics/mp_nssl.F90'                      ,
     'physics/physics/ozphys.f',
     'physics/physics/ozphys_2015.f',
-    'physics/physics/precpd.f',
+    'physics/physics/zhaocarr_precpd.f',
     'physics/physics/phys_tend.F90',
     'physics/physics/radlw_main.F90',
     'physics/physics/radsw_main.F90',
@@ -173,16 +197,18 @@ SCHEME_FILES = [
     'physics/physics/rrtmg_lw_post.F90',
     'physics/physics/rrtmg_lw_pre.F90',
     'physics/physics/rrtmg_sw_post.F90',
-    'physics/physics/rrtmg_sw_pre.F90',
+    'physics/physics/rad_sw_pre.F90',
     'physics/physics/sfc_diag.f',
     'physics/physics/sfc_diag_post.F90',
-    'physics/physics/sfc_drv_ruc.F90',
+    'physics/physics/lsm_ruc.F90',
     'physics/physics/sfc_cice.f',
     'physics/physics/sfc_diff.f',
-    'physics/physics/sfc_drv.f',
-    'physics/physics/sfc_noahmp_drv.F90',
+    'physics/physics/lsm_noah.f',
+    'physics/physics/noahmpdrv.F90',
     'physics/physics/flake_driver.F90',
+    'physics/physics/sfc_nst_pre.f',
     'physics/physics/sfc_nst.f',
+    'physics/physics/sfc_nst_post.f',
     'physics/physics/sfc_ocean.F',
     'physics/physics/sfc_sice.f',
     # HAFS FER_HIRES
@@ -192,28 +218,24 @@ SCHEME_FILES = [
     'physics/physics/rrtmgp_lw_cloud_optics.F90',
     'physics/physics/rrtmgp_sw_gas_optics.F90',
     'physics/physics/rrtmgp_sw_cloud_optics.F90',
-    'physics/physics/rrtmgp_sw_aerosol_optics.F90',
+    'physics/physics/rrtmgp_aerosol_optics.F90',
     'physics/physics/rrtmgp_lw_rte.F90',
     'physics/physics/rrtmgp_sw_rte.F90',
-    'physics/physics/rrtmgp_lw_aerosol_optics.F90',
     'physics/physics/GFS_rrtmgp_setup.F90',
     'physics/physics/GFS_rrtmgp_pre.F90',
     'physics/physics/rrtmgp_lw_pre.F90',
-    'physics/physics/GFS_rrtmgp_sw_pre.F90',
     'physics/physics/GFS_rrtmgp_lw_post.F90',
     'physics/physics/rrtmgp_lw_cloud_sampling.F90',
     'physics/physics/rrtmgp_sw_cloud_sampling.F90',
     'physics/physics/GFS_cloud_diagnostics.F90',
-    'physics/physics/GFS_rrtmgp_thompsonmp_pre.F90',
-    'physics/physics/GFS_rrtmgp_gfdlmp_pre.F90',
-    'physics/physics/GFS_rrtmgp_zhaocarr_pre.F90',
-    'physics/physics/GFS_rrtmgp_cloud_overlap_pre.F90',
+    'physics/physics/GFS_rrtmgp_cloud_mp.F90',
+    'physics/physics/GFS_rrtmgp_cloud_overlap.F90',
     'physics/physics/GFS_rrtmgp_sw_post.F90'
     ]
 
 # Default build dir, relative to current working directory,
 # if not specified as command-line argument
-DEFAULT_BUILD_DIR = 'FV3'
+DEFAULT_BUILD_DIR = 'build'
 
 # Auto-generated makefile/cmakefile snippets that contain all type definitions
 TYPEDEFS_MAKEFILE   = '{build_dir}/physics/CCPP_TYPEDEFS.mk'
@@ -236,91 +258,12 @@ CAPS_DIR = '{build_dir}/physics'
 # Directory where the suite definition files are stored
 SUITES_DIR = 'suites'
 
-# Optional arguments - only required for schemes that use
-# optional arguments. ccpp_prebuild.py will throw an exception
-# if it encounters a scheme subroutine with optional arguments
-# if no entry is made here. Possible values are: 'all', 'none',
-# or a list of standard_names: [ 'var1', 'var3' ].
-OPTIONAL_ARGUMENTS = {
-    'rrtmg_sw' : {
-        'rrtmg_sw_run' : [
-            'tendency_of_air_temperature_due_to_shortwave_heating_assuming_clear_sky_on_radiation_time_step_and_radiation_levels',
-            'components_of_surface_downward_shortwave_fluxes',
-            'cloud_liquid_water_path',
-            'mean_effective_radius_for_liquid_cloud',
-            'cloud_ice_water_path',
-            'mean_effective_radius_for_ice_cloud',
-            'cloud_rain_water_path',
-            'mean_effective_radius_for_rain_drop',
-            'cloud_snow_water_path',
-            'mean_effective_radius_for_snow_flake',
-            ],
-        },
-    'rrtmg_lw' : {
-        'rrtmg_lw_run' : [
-            'tendency_of_air_temperature_due_to_longwave_heating_assuming_clear_sky_on_radiation_time_step_and_radiation_levels',
-            'cloud_liquid_water_path',
-            'mean_effective_radius_for_liquid_cloud',
-            'cloud_ice_water_path',
-            'mean_effective_radius_for_ice_cloud',
-            'cloud_rain_water_path',
-            'mean_effective_radius_for_rain_drop',
-            'cloud_snow_water_path',
-            'mean_effective_radius_for_snow_flake',
-            ],
-        },
-    'mp_thompson' : {
-        'mp_thompson_init' : [
-            'mass_number_concentration_of_cloud_liquid_water_particles_in_air',
-            'mass_number_concentration_of_hygroscopic_aerosols',
-            'mass_number_concentration_of_nonhygroscopic_ice_nucleating_aerosols',
-            'tendency_of_hygroscopic_aerosols_at_surface_adjacent_layer',
-            'tendency_of_nonhygroscopic_ice_nucleating_aerosols_at_surface_adjacent_layer',
-            # DH* 2020-06-01: turn off calculation of effective radii, now done in GFS_rrtmg_pre
-            #'effective_radius_of_stratiform_cloud_liquid_water_particle',
-            #'effective_radius_of_stratiform_cloud_ice_particle',
-            #'effective_radius_of_stratiform_cloud_snow_particle',
-            # *DH 2020-06-01
-            ],
-        'mp_thompson_run' : [
-            'mass_number_concentration_of_cloud_liquid_water_particles_in_air_of_new_state',
-            'mass_number_concentration_of_hygroscopic_aerosols_of_new_state',
-            'mass_number_concentration_of_nonhygroscopic_ice_nucleating_aerosols_of_new_state',
-            'tendency_of_hygroscopic_aerosols_at_surface_adjacent_layer',
-            'tendency_of_nonhygroscopic_ice_nucleating_aerosols_at_surface_adjacent_layer',
-            # DH* 2020-06-01: turn off calculation of effective radii, now done in GFS_rrtmg_pre
-            #'effective_radius_of_stratiform_cloud_liquid_water_particle',
-            #'effective_radius_of_stratiform_cloud_ice_particle',
-            #'effective_radius_of_stratiform_cloud_snow_particle',
-            # *DH 2020-06-01
-            ],
-        },
-    'rrtmgp_sw_rte' : {
-         'rrtmgp_sw_rte_run' : [
-             'components_of_surface_downward_shortwave_fluxes',
-             ],
-         },
-    'GFS_rrtmgp_sw_post' : {
-         'GFS_rrtmgp_sw_post_run' : [
-             'tendency_of_air_temperature_due_to_shortwave_heating_assuming_clear_sky_on_radiation_timestep',
-             'components_of_surface_downward_shortwave_fluxes',
-             ],
-         },
-    'GFS_rrtmgp_lw_post' : {
-         'GFS_rrtmgp_lw_post_run' : [
-             'tendency_of_air_temperature_due_to_longwave_heating_assuming_clear_sky_on_radiation_timestep',
-             ],
-         },
-    #'subroutine_name_1' : 'all',
-    #'subroutine_name_2' : 'none',
-    #'subroutine_name_2' : [ 'var1', 'var3'],
-    }
-
 # Directory where to write static API to
 STATIC_API_DIR = '{build_dir}/physics'
 STATIC_API_SRCFILE = '{build_dir}/physics/CCPP_STATIC_API.sh'
 
 # Directory for writing HTML pages generated from metadata files
+# used by metadata2html.py for generating scientific documentation
 METADATA_HTML_OUTPUT_DIR = '{build_dir}/physics/physics/docs'
 
 # HTML document containing the model-defined CCPP variables

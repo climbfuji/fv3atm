@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<suite name="FV3_GSD_noah" version="1">
+<suite name="FV3_RRFS_v1nssl"  version="1">
   <!-- <init></init> -->
   <group name="time_vary">
     <subcycle loop="1">
@@ -16,7 +16,7 @@
       <scheme>sgscloud_radpre</scheme>
       <scheme>GFS_rrtmg_pre</scheme>
       <scheme>GFS_radiation_surface</scheme>
-      <scheme>rrtmg_sw_pre</scheme>
+      <scheme>rad_sw_pre</scheme>
       <scheme>rrtmg_sw</scheme>
       <scheme>rrtmg_sw_post</scheme>
       <scheme>rrtmg_lw_pre</scheme>
@@ -40,12 +40,12 @@
     </subcycle>
     <!-- Surface iteration loop -->
     <subcycle loop="2">
-      <scheme>sfc_diff</scheme>
+      <scheme>mynnsfc_wrapper</scheme>
       <scheme>GFS_surface_loop_control_part1</scheme>
       <scheme>sfc_nst_pre</scheme>
       <scheme>sfc_nst</scheme>
       <scheme>sfc_nst_post</scheme>
-      <scheme>lsm_noah</scheme>
+      <scheme>noahmpdrv</scheme>
       <scheme>sfc_sice</scheme>
       <scheme>GFS_surface_loop_control_part2</scheme>
     </subcycle>
@@ -64,25 +64,9 @@
       <scheme>ozphys_2015</scheme>
       <scheme>h2ophys</scheme>
       <scheme>get_phi_fv3</scheme>
-      <scheme>GFS_suite_interstitial_3</scheme>
-      <scheme>GFS_DCNV_generic_pre</scheme>
-      <scheme>cu_gf_driver_pre</scheme>
-      <scheme>cu_gf_driver</scheme>
-      <scheme>GFS_DCNV_generic_post</scheme>
-      <scheme>GFS_SCNV_generic_pre</scheme>
-      <scheme>GFS_SCNV_generic_post</scheme>
-      <scheme>GFS_suite_interstitial_4</scheme>
-      <scheme>cnvc90</scheme>
       <scheme>GFS_MP_generic_pre</scheme>
-      <scheme>mp_thompson_pre</scheme>
-    </subcycle>
-    <subcycle loop="4">
-      <scheme>mp_thompson</scheme>
-    </subcycle>
-    <subcycle loop="1">
-      <scheme>mp_thompson_post</scheme>
+      <scheme>mp_nssl</scheme>
       <scheme>GFS_MP_generic_post</scheme>
-      <scheme>cu_gf_driver_post</scheme>
       <scheme>maximum_hourly_diagnostics</scheme>
       <scheme>phys_tend</scheme>
     </subcycle>
