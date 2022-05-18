@@ -74,7 +74,6 @@ endif()
 
 target_link_libraries(fv3atm PUBLIC fv3
                                     fv3ccpp
-                                    ccpp_physics
                                     stochastic_physics
                                     fms)
 
