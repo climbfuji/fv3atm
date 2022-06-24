@@ -176,7 +176,7 @@ SCHEME_FILES = [
     'physics/physics/satmedmfvdifq.F',
     'physics/physics/shinhongvdif.F90',
     'physics/physics/ysuvdif.F90',
-    'physics/physics/mynnpbl_wrapper.F90',
+    'physics/physics/mynnedmf_wrapper.F90',
     'physics/physics/mynnsfc_wrapper.F90',
     'physics/physics/sgscloud_radpre.F90',
     'physics/physics/sgscloud_radpost.F90',
@@ -260,7 +260,8 @@ SUITES_DIR = 'suites'
 
 # Directory where to write static API to
 STATIC_API_DIR = '{build_dir}/physics'
-STATIC_API_SRCFILE = '{build_dir}/physics/CCPP_STATIC_API.sh'
+STATIC_API_CMAKEFILE = '{build_dir}/physics/CCPP_STATIC_API.cmake'
+STATIC_API_SOURCEFILE = '{build_dir}/physics/CCPP_STATIC_API.sh'
 
 # Directory for writing HTML pages generated from metadata files
 # used by metadata2html.py for generating scientific documentation
