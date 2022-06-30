@@ -553,7 +553,7 @@ subroutine atmos_model_init (Atmos, Time_init, Time, Time_step)
 !-----------------------------------------------------------------------
    call atmosphere_resolution (nlon, nlat, global=.false.)
    call atmosphere_resolution (mlon, mlat, global=.true.)
-   call atmosphere_domain (Atmos%domain, Atmos%layout, Atmos%regional, Atmos%nested, &
+   call atmosphere_domain (Atmos%domain, Atmos%domain, Atmos%layout, Atmos%regional, Atmos%nested, &
                            Atmos%moving_nest_parent, Atmos%is_moving_nest, &
                            Atmos%ngrids, Atmos%mygrid, Atmos%pelist)
    call atmosphere_diag_axes (Atmos%axes)
