@@ -60,7 +60,8 @@ add_library(fv3atm
   ${POST_SRC}
 )
 
-add_dependencies(fv3atm fv3 fv3ccpp ccpp_physics stochastic_physics)
+#add_dependencies(fv3atm fv3 fv3ccpp ccpp_physics stochastic_physics)
+add_dependencies(fv3atm fv3 fv3ccpp stochastic_physics)
 
 list(APPEND _fv3atm_defs_private GFS_PHYS
                                  INTERNAL_FILE_NML
