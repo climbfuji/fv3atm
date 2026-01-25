@@ -8,8 +8,10 @@
   branch = develop
 [submodule "ccpp/physics"]
   path = ccpp/physics
-  url = https://github.com/ufs-community/ccpp-physics
-  branch = ufs/dev
+  #url = https://github.com/ufs-community/ccpp-physics
+  #branch = ufs/dev
+  url = https://github.com/climbfuji/ccpp-physics
+  branch = feature/wrapper_1183_1188_1189_ufs_community
 [submodule "upp"]
   path = upp
   url = https://github.com/NOAA-EMC/UPP
