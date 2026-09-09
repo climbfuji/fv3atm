@@ -341,7 +341,8 @@ if (FV3)
   target_link_libraries(${DYCORE_TARGET} PUBLIC fv3
                                          fv3ccpp
                                          stochastic_physics
-                                         fms)
+                                         fms
+					 PkgConfig::YAML)
   if(UFS_TRACING)
     target_link_libraries(${DYCORE_TARGET} PUBLIC ufs_tracing)
   endif()
@@ -356,7 +357,8 @@ endif()
 if (MPAS)
   target_link_libraries(${DYCORE_TARGET} PUBLIC mpas
                                          mpasccpp
-					 fms)
+					 fms
+					 PkgConfig::YAML)
 endif()
 
 # Always include EMC libraries in dycore install
