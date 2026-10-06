@@ -76,6 +76,7 @@
       <scheme>cnvc90</scheme>
       <scheme>gfdl_cloud_microphys</scheme>
       <scheme>GFS_MP_generic_post</scheme>
+      <scheme>maximum_hourly_diagnostics</scheme>
       <scheme>GFS_physics_post</scheme>
     </subcycle>
   </group>
